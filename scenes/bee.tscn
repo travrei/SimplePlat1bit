@@ -1,0 +1,108 @@
+[gd_scene load_steps=12 format=3 uid="uid://bggyj5yx5sgia"]
+
+[ext_resource type="Texture2D" uid="uid://0lk1c5u1nc1t" path="res://assets/bee_attack.png" id="1_sap3b"]
+[ext_resource type="Texture2D" uid="uid://bfssoml7mktrf" path="res://assets/bee_flying.png" id="2_asmai"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wah1c"]
+size = Vector2(16, 6)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4i4yo"]
+atlas = ExtResource("1_sap3b")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4j2os"]
+atlas = ExtResource("1_sap3b")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_14ql3"]
+atlas = ExtResource("2_asmai")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l1ekv"]
+atlas = ExtResource("2_asmai")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_3117q"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4i4yo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4j2os")
+}],
+"loop": true,
+"name": &"attack",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_14ql3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l1ekv")
+}],
+"loop": true,
+"name": &"fly",
+"speed": 10.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_psqws"]
+size = Vector2(10, 14)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_q5gad"]
+radius = 92.0054
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_dx8eh"]
+radius = 2.0
+height = 14.0
+
+[node name="Bee" type="Bee"]
+collision_layer = 4
+collision_mask = 11
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_wah1c")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_3117q")
+animation = &"attack"
+frame_progress = 0.030111
+
+[node name="attacktimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="damage_area" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="damage_area"]
+position = Vector2(0, -2)
+rotation = -1.5708
+shape = SubResource("RectangleShape2D_psqws")
+debug_color = Color(0, 0.631373, 0.47451, 0.419608)
+
+[node name="player_detec" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="player_detec"]
+shape = SubResource("CircleShape2D_q5gad")
+
+[node name="sting_area" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="sting_area"]
+position = Vector2(1, 5)
+rotation = -1.5708
+shape = SubResource("CapsuleShape2D_dx8eh")
+debug_color = Color(0.980392, 0, 0.384314, 0.419608)
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+position = Vector2(0.500001, 7.15256e-07)
+scale = Vector2(0.75, 0.7)
+
+[connection signal="timeout" from="attacktimer" to="." method="on_attacktimer_timeout"]
+[connection signal="body_entered" from="damage_area" to="." method="on_damage_area_body_entered"]
+[connection signal="body_entered" from="player_detec" to="." method="on_player_detec_body_entered"]

@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://q1xc1yy64d1x"]
+
+[ext_resource type="Texture2D" uid="uid://obevcdxe6ymi" path="res://assets/hands-export.png" id="1_oct6u"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_syyi3"]
+radius = 4.12311
+
+[node name="Hands" type="Hands"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_syyi3")
+
+[node name="Hands-export" type="Sprite2D" parent="."]
+texture = ExtResource("1_oct6u")

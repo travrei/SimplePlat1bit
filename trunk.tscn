@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://drymioc4l1kst"]
+
+[ext_resource type="Texture2D" uid="uid://j74sue0lsre2" path="res://assets/tileset_transp.png" id="1_1miyv"]
+[ext_resource type="Script" path="res://scenes/trunk.gd" id="1_4oxgh"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_e1piu"]
+size = Vector2(2, 8)
+
+[node name="trunk" type="Area2D"]
+script = ExtResource("1_4oxgh")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_1miyv")
+region_enabled = true
+region_rect = Rect2(152, 33, 8, 8)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_e1piu")
+
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
